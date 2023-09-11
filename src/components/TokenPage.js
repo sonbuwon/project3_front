@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { localurl } from "../utils/localUrl";
 
 function TokenPage() {
   const oldAccessToken = localStorage.getItem("accessToken");
   const oldRefreshToken = localStorage.getItem("refreshToken");
+
+  useEffect(() => {}, [oldAccessToken, oldRefreshToken]);
 
   const doRefresh = () => {
     fetch(`${localurl}/refreshToken`, {

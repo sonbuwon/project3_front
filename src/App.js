@@ -1,18 +1,21 @@
 // import { useEffect, useState } from "react";
 import "./App.css";
 // import KakaoMap from "./components/KakaoMap";
-// import { localurl } from "./utils/localUrl";
 import LoginPage from "./components/LoginPage";
-import TokenPage from "./components/TokenPage";
-// import SamplePage from "./components/SamplePage";
+import RegisterPage from "./components/RegisterPage";
+// import TokenPage from "./components/TokenPage";
+import SamplePage from "./components/SamplePage";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   return (
     <div className="App">
       {/* <KakaoMap /> */}
-      {/* <SamplePage /> */}
+      <UserProfile />
+      <RegisterPage />
       <LoginPage />
-      <TokenPage />
+      <SamplePage />
+      {/* <TokenPage /> */}
     </div>
   );
 }

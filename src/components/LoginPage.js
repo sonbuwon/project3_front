@@ -32,23 +32,38 @@ function LoginPage() {
         console.log(textData);
         // 텍스트 데이터를 JSON으로 변환
         const jsonData = JSON.parse(textData);
-        console.log("Parsed JSON data:", jsonData);
+        console.log("Parsed LoginPage JSON data:", jsonData);
+        // 로컬 스토리지에 저장
         localStorage.setItem("accessToken", jsonData.accessToken);
         localStorage.setItem("refreshToken", jsonData.refreshToken);
       })
       .catch((err) => console.log(err));
   };
 
+  // 임시 로그아웃
+  // 로그아웃시 메인 홈페이지로 돌아가게끔 구현해야된다
+  const doTempLogout = () => {
+    try {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
-      <p>LoginPage</p>
+      <p>로그인 페이지</p>
       <div>
         <input value={idValue} onChange={saveUserId} placeholder="ID" />
         <br />
         <input value={pwValue} onChange={saveUserPw} placeholder="PASSWORD" />
       </div>
       <div>
-        <button onClick={doLogin}>Generate Token</button>
+        <button onClick={doLogin}>Login(Generate Token)</button>
+      </div>
+      <div>
+        <button onClick={doTempLogout}>Logout</button>
       </div>
     </div>
   );
