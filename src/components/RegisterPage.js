@@ -4,6 +4,7 @@ import { localurl } from "../utils/localUrl";
 function RegisterPage() {
   const [idValue, setId] = useState("");
   const [pwValue, setPw] = useState("");
+  const [nickValue, setNick] = useState("");
 
   const handleIdChange = (e) => {
     setId(e.target.value);
@@ -11,6 +12,10 @@ function RegisterPage() {
 
   const handlePwChange = (e) => {
     setPw(e.target.value);
+  };
+
+  const handleNickChange = (e) => {
+    setNick(e.target.value);
   };
 
   const handleRegister = () => {
@@ -22,6 +27,7 @@ function RegisterPage() {
       body: JSON.stringify({
         mid: idValue,
         mpw: pwValue,
+        nickname: nickValue,
       }),
     })
       .then((response) => {
@@ -41,13 +47,26 @@ function RegisterPage() {
     <div>
       <p>회원가입 페이지</p>
       <div>
-        <input value={idValue} onChange={handleIdChange} placeholder="ID" />
+        <input
+          value={idValue}
+          onChange={handleIdChange}
+          placeholder="ID"
+          required
+        />
         <br />
         <input
           type="password"
           value={pwValue}
           onChange={handlePwChange}
-          placeholder="Password"
+          placeholder="PASSWORD"
+          required
+        />
+        <br />
+        <input
+          value={nickValue}
+          onChange={handleNickChange}
+          placeholder="NICKNAME"
+          required
         />
       </div>
       <div>

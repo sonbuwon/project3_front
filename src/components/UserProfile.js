@@ -2,25 +2,27 @@ import React, { useState, useEffect } from "react";
 import { localurl } from "../utils/localUrl";
 
 function UserProfile() {
-  const [userId, setUserId] = useState("");
+  const [userNickname, setUserNickname] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("refreshToken");
 
-    fetch(`${localurl}/user/getUserId`, {
+    fetch(`${localurl}/user/getUserNickname`, {
       headers: {
         Authorization: token,
       },
     })
       .then((response) => response.text())
       .then((data) => {
-        setUserId(data);
+        // 닉네임 잘 출력되는 확인
+        // console.log(data);
+        setUserNickname(data);
       });
   }, []);
 
   return (
     <div>
-      <p>Loggind in: {userId}</p>
+      <p>접속한 유저: {userNickname}</p>
     </div>
   );
 }

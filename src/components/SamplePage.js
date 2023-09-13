@@ -71,7 +71,7 @@ function SamplePage() {
 
   return (
     <div>
-      <p>SamplePage</p>
+      <h3>로그인시만 접근 가능</h3>
 
       <button onClick={handleButtonClick} className="btn1">
         CALL SERVER
