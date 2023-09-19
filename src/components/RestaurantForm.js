@@ -13,6 +13,9 @@ function RestaurantForm() {
     callNumber: "",
   });
 
+  const [fileInputs, setFileInputs] = useState([0]); // 초기 상태에 하나의 파일 입력 필드
+  const [files, setFiles] = useState({});
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -21,25 +24,48 @@ function RestaurantForm() {
     }));
   };
 
+  const handleFileChange = (e, index) => {
+    const updatedFiles = { ...files };
+    updatedFiles[index] = e.target.files[0];
+    setFiles(updatedFiles);
+  };
+
+  const addFileInput = () => {
+    setFileInputs((prev) => [...prev, prev.length]);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`${localurl}/admin/upload`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
+
+    const data = new FormData();
+    Object.keys(formData).forEach((key) => {
+      data.append(key, formData[key]);
+    });
+    Object.keys(files).forEach((key) => {
+      data.append("image", files[key]);
+    });
+
+    const timeout = (ms, promise) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject(new Error("Request timed out"));
+        }, ms);
+        promise.then(resolve, reject);
+      });
+    };
+
+    timeout(
+      6000,
+      fetch(`${localurl}/admin/upload`, {
+        method: "POST",
+        body: data,
+      })
+    )
       .then((response) => response.text())
-      //   .then((data) => {
-      //     if (data && data.message) {
-      //       alert(data.message);
-      //     }
-      //   })
+      .then(window.location.reload())
       .catch((error) => {
         console.error("Error uploading data: ", error);
       });
-    window.location.reload();
   };
 
   return (
@@ -102,13 +128,19 @@ function RestaurantForm() {
           required
         />
         <br />
-        <input
-          name="image"
-          placeholder="Image URL"
-          value={formData.image}
-          onChange={handleChange}
-          required
-        />
+        {fileInputs.map((index) => (
+          <div key={index}>
+            <input
+              type="file"
+              name={"image" + index}
+              onChange={(e) => handleFileChange(e, index)}
+            />
+            <br />
+          </div>
+        ))}
+        <button type="button" onClick={addFileInput}>
+          Add another image
+        </button>
         <br />
         <input
           name="callNumber"

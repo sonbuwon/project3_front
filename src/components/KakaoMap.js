@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 // 함수형 컴포넌트에 kakao객체 인지시키기
 const { kakao } = window;
