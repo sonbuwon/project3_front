@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { localurl } from "../utils/localUrl";
+import { useNavigate } from "react-router-dom";
 
 function RestaurantForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     location: "",
@@ -62,7 +64,10 @@ function RestaurantForm() {
       })
     )
       .then((response) => response.text())
-      .then(window.location.reload())
+      .then(() => {
+        alert("식당이 등록되었습니다.");
+        navigate("/list");
+      })
       .catch((error) => {
         console.error("Error uploading data: ", error);
       });

@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import { localurl } from "../utils/localUrl";
 import { formatTime } from "../utils/formatTime";
 import KakaoMap from "./KakaoMap";
+import { useNavigate } from "react-router-dom";
 
 function RestaurantDetailPage() {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null); // 이 부분은 식당 하나의 상세 정보만을 가져오도록 수정하였습니다.
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${localurl}/store/${id}`, {
@@ -28,16 +30,22 @@ function RestaurantDetailPage() {
       restaurantId: id,
     };
 
+    const token = localStorage.getItem("refreshToken");
+
     fetch(`${localurl}/user/reserve`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: token, // Authorization 헤더에 토큰을 설정합니다.
       },
       body: JSON.stringify(reservationData),
     })
       .then((response) => {
         if (response.ok) {
-          console.log("예약이 완료되었습니다.");
+          alert("예약이 완료되었습니다.");
+          // 차후엔 마이페이지로 이동
+          // 일단 홈으로 이동
+          navigate("/");
         } else {
           console.error("예약 실패");
         }

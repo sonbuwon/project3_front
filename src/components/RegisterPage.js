@@ -52,7 +52,7 @@ function RegisterPage() {
     })
       .then((response) => {
         if (response.ok) {
-          alert("Registration successful!");
+          alert("회원가입 되었습니다. 환영합니다.");
           // 홈으로 이동
           navigate("/");
         } else {
