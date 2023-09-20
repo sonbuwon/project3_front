@@ -32,6 +32,14 @@ function RestaurantDetailPage() {
 
     const token = localStorage.getItem("refreshToken");
 
+    if (!token) {
+      // 토큰이 없는 경우에 대한 처리
+      //console.error("로그인이 필요합니다.");
+      alert("로그인이 필요합니다.");
+      navigate("/login");
+      return; // 예약을 시도하지 않고 함수 종료
+    }
+
     fetch(`${localurl}/user/reserve`, {
       method: "POST",
       headers: {

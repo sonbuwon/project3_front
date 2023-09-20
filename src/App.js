@@ -7,6 +7,7 @@ import RestaurantForm from "./components/RestaurantForm";
 import RestaurantList from "./components/RestaurantList";
 import SamplePage from "./components/SamplePage";
 import UserProfile from "./components/UserProfile";
+import TopRatedRestaurantList from "./components/TopRatedRestaurantList";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -20,8 +21,9 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/mypage" element={<SamplePage />} />
           <Route path="/restaurantform" element={<RestaurantForm />} />
-          <Route path="/list" element={<RestaurantList />} />
+          <Route path="/store/list" element={<RestaurantList />} />
           <Route path="/store/:id" element={<RestaurantDetailPage />} />
+          <Route path="/store/top" element={<TopRatedRestaurantList />} />
         </Routes>
       </Router>
     </div>

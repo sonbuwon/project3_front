@@ -66,7 +66,7 @@ function RestaurantForm() {
       .then((response) => response.text())
       .then(() => {
         alert("식당이 등록되었습니다.");
-        navigate("/list");
+        navigate("/store/list");
       })
       .catch((error) => {
         console.error("Error uploading data: ", error);
