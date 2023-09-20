@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { localurl } from "../utils/localUrl";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [idValue, setId] = useState("");
   const [pwValue, setPw] = useState("");
+  const navigate = useNavigate();
+
   const saveUserId = (e) => {
     setId(e.target.value);
   };
@@ -37,7 +40,9 @@ function LoginPage() {
         // 로컬 스토리지에 저장
         localStorage.setItem("accessToken", jsonData.accessToken);
         localStorage.setItem("refreshToken", jsonData.refreshToken);
-        // 로그인시 새로고침(삭제 예정)
+        // 로그인시 새로고침
+        // 홈으로 이동
+        navigate("/");
         window.location.reload();
       })
       .catch((err) => console.log(err));

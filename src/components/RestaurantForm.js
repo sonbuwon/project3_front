@@ -95,11 +95,19 @@ function RestaurantForm() {
           required
         >
           <option value="">-- Select a Category --</option>
-          <option value="KOREAN">Korean</option>
-          <option value="JAPANESE">Japanese</option>
-          <option value="CHINESE">Chinese</option>
-          <option value="WESTERN">Western</option>
-          <option value="CAFE">Cafe</option>
+          <option value="족발보쌈">족발보쌈</option>
+          <option value="찜탕찌개">찜탕찌개</option>
+          <option value="돈까스회일식">돈까스회일식</option>
+          <option value="피자">피자</option>
+          <option value="고기구이">고기구이</option>
+          <option value="야식">야식</option>
+          <option value="양식">양식</option>
+          <option value="치킨">치킨</option>
+          <option value="중식">중식</option>
+          <option value="아시안">아시안</option>
+          <option value="분식">분식</option>
+          <option value="카페디저트">카페디저트</option>
+          <option value="패스트푸드">패스트푸드</option>
         </select>
         <br />
         <textarea

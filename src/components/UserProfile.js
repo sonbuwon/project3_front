@@ -3,16 +3,28 @@ import { localurl } from "../utils/localUrl";
 
 function UserProfile() {
   const [userNickname, setUserNickname] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("refreshToken");
+
+    // 토큰이 없으면 fetch를 호출하지 않고 종료
+    if (!token) {
+      setIsAuthenticated(false);
+      return;
+    }
 
     fetch(`${localurl}/user/getUserNickname`, {
       headers: {
         Authorization: token,
       },
     })
-      .then((response) => response.text())
+      .then((response) => {
+        if (!response.ok) {
+          setIsAuthenticated(false); // 토큰이 유효하지 않으면 인증 상태를 false로 설정
+        }
+        return response.text();
+      })
       .then((data) => {
         // 닉네임 잘 출력되는 확인
         // console.log(data);
@@ -22,7 +34,11 @@ function UserProfile() {
 
   return (
     <div>
-      <p>접속한 유저: {userNickname}</p>
+      {isAuthenticated ? (
+        <p>접속한 유저: {userNickname}</p>
+      ) : (
+        <p>로그인이 필요합니다.</p>
+      )}
     </div>
   );
 }

@@ -14,14 +14,38 @@ function RestaurantDetailPage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        console.log(`${localurl}/store/${id}`);
+        // console.log(data);
+        // console.log(`${localurl}/store/${id}`);
         setRestaurant(data);
       })
       .catch((error) => {
         console.error("Error uploading data: ", error);
       });
   }, [id]);
+
+  const reserveRestaurant = () => {
+    const reservationData = {
+      restaurantId: id,
+    };
+
+    fetch(`${localurl}/user/reserve`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reservationData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("예약이 완료되었습니다.");
+        } else {
+          console.error("예약 실패");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   if (!restaurant) return <div>Loading....</div>;
 
@@ -46,6 +70,7 @@ function RestaurantDetailPage() {
         ))}
       <p>전화번호: {restaurant.callNumber}</p>
       <p>예약 횟수: {restaurant.reservationCount}</p>
+      <button onClick={reserveRestaurant}>예약하기</button>
     </div>
   );
 }
