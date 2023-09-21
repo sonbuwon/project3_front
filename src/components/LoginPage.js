@@ -67,7 +67,12 @@ function LoginPage() {
       <div>
         <input value={idValue} onChange={saveUserId} placeholder="ID" />
         <br />
-        <input value={pwValue} onChange={saveUserPw} placeholder="PASSWORD" />
+        <input
+          value={pwValue}
+          onChange={saveUserPw}
+          type="password"
+          placeholder="PASSWORD"
+        />
       </div>
       <div>
         <button onClick={doLogin}>Login(Generate Token)</button>

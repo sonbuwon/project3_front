@@ -39,6 +39,12 @@ function RestaurantForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("refreshToken");
+
+    if (!token) {
+      return;
+    }
+
     const data = new FormData();
     Object.keys(formData).forEach((key) => {
       data.append(key, formData[key]);
@@ -59,14 +65,20 @@ function RestaurantForm() {
     timeout(
       6000,
       fetch(`${localurl}/admin/upload`, {
+        headers: {
+          Authorization: token,
+        },
         method: "POST",
         body: data,
       })
     )
-      .then((response) => response.text())
-      .then(() => {
-        alert("식당이 등록되었습니다.");
-        navigate("/store/list");
+      .then((response) => {
+        if (response.ok) {
+          alert("식당이 등록되었습니다.");
+          navigate("/store/list");
+        } else {
+          alert("식당 등록에 실패했습니다. 다시 시도해주세요.");
+        }
       })
       .catch((error) => {
         console.error("Error uploading data: ", error);
@@ -99,20 +111,19 @@ function RestaurantForm() {
           onChange={handleChange}
           required
         >
-          <option value="">-- Select a Category --</option>
-          <option value="족발보쌈">족발보쌈</option>
-          <option value="찜탕찌개">찜탕찌개</option>
-          <option value="돈까스회일식">돈까스회일식</option>
-          <option value="피자">피자</option>
-          <option value="고기구이">고기구이</option>
-          <option value="야식">야식</option>
-          <option value="양식">양식</option>
-          <option value="치킨">치킨</option>
+          <option value="">-- 카테고리 선택 --</option>
+          <option value="한식">한식</option>
           <option value="중식">중식</option>
-          <option value="아시안">아시안</option>
+          <option value="일식">일식</option>
+          <option value="양식">양식</option>
+          <option value="카페">카페</option>
+          <option value="피자">피자</option>
+          <option value="치킨">치킨</option>
           <option value="분식">분식</option>
-          <option value="카페디저트">카페디저트</option>
-          <option value="패스트푸드">패스트푸드</option>
+          <option value="고기">고기</option>
+          <option value="호텔">호텔</option>
+          <option value="오마카세">오마카세</option>
+          <option value="파인다이닝">파인다이닝</option>
         </select>
         <br />
         <textarea

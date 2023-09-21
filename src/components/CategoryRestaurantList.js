@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { localurl } from "../utils/localUrl";
+import { Link, useParams } from "react-router-dom"; // useParams 추가
 import { formatTime } from "../utils/formatTime";
 
-function RestaurantList() {
+function CategoryRestaurantList() {
+  const { category } = useParams(); // useParams를 통해 카테고리 값을 가져옴
   const [restaurants, setRestaurants] = useState([]);
 
-  // 마운트시 전체 등록된 식당 전체 출력
   useEffect(() => {
-    fetch(`${localurl}/store/list`, {
+    // 카테고리별 식당을 불러오는 API 호출
+    fetch(`${localurl}/store/byCategory/${category}`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -16,34 +17,13 @@ function RestaurantList() {
         setRestaurants(data);
       })
       .catch((error) => {
-        console.error("Error uploading data: ", error);
+        console.error("Error fetching data: ", error);
       });
-  }, []);
+  }, [category]);
 
-  // 삭제 버튼 클릭시 해당 식당 삭제
-  const deleteRestaurant = (id) => {
-    const token = localStorage.getItem("refreshToken");
-
-    fetch(`${localurl}/admin/store/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: token,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          // 성공적으로 삭제된 경우, 리스트에서 해당 항목을 제거
-          setRestaurants(
-            restaurants.filter((restaurant) => restaurant.id !== id)
-          );
-        } else {
-          console.error("Error deleting restaurant");
-        }
-      })
-      .catch((error) => {
-        console.error("Error deleting restaurant: ", error);
-      });
-  };
+  if (restaurants.length === 0) {
+    return <div>데이터를 불러올 수 없습니다.</div>;
+  }
 
   return (
     <div>
@@ -58,7 +38,7 @@ function RestaurantList() {
             <th>오픈 시간</th>
             <th>마감 시간</th>
             <th>전화번호</th>
-            <th></th>
+            <th>예약횟수</th>
           </tr>
         </thead>
         <tbody>
@@ -73,11 +53,7 @@ function RestaurantList() {
               <td>{formatTime(restaurant.openingTime)}</td>
               <td>{formatTime(restaurant.closingTime)}</td>
               <td>{restaurant.callNumber}</td>
-              <td>
-                <button onClick={() => deleteRestaurant(restaurant.id)}>
-                  DELETE
-                </button>
-              </td>
+              <td>{restaurant.reservationCount}</td>
             </tr>
           ))}
         </tbody>
@@ -86,4 +62,4 @@ function RestaurantList() {
   );
 }
 
-export default RestaurantList;
+export default CategoryRestaurantList;
