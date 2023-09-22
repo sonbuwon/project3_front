@@ -9,8 +9,8 @@ function RestaurantForm() {
     location: "",
     category: "",
     description: "",
-    openingTime: "",
-    closingTime: "",
+    openingTime: "09:00",
+    closingTime: "20:00",
     image: "",
     callNumber: "",
   });
@@ -87,7 +87,7 @@ function RestaurantForm() {
 
   return (
     <div>
-      <p>식당 등록</p>
+      <p>업체 등록</p>
       <form onSubmit={handleSubmit}>
         <input
           name="name"

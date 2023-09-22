@@ -16,8 +16,6 @@ function RestaurantDetailPage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
-        // console.log(`${localurl}/store/${id}`);
         setRestaurant(data);
       })
       .catch((error) => {
@@ -32,30 +30,27 @@ function RestaurantDetailPage() {
 
     const token = localStorage.getItem("refreshToken");
 
-    if (!token) {
-      // 토큰이 없는 경우에 대한 처리
-      //console.error("로그인이 필요합니다.");
-      alert("로그인이 필요합니다.");
-      navigate("/login");
-      return; // 예약을 시도하지 않고 함수 종료
-    }
-
     fetch(`${localurl}/user/reserve`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token, // Authorization 헤더에 토큰을 설정합니다.
+        Authorization: token,
       },
       body: JSON.stringify(reservationData),
     })
       .then((response) => {
-        if (response.ok) {
+        if (response.status === 200) {
           alert("예약이 완료되었습니다.");
-          // 차후엔 마이페이지로 이동
-          // 일단 홈으로 이동
-          navigate("/");
+          navigate("/user/mypage");
+        } else if (response.status === 401) {
+          alert("예약은 로그인이 필요합니다.");
+          navigate("/user/login");
+        } else if (response.status === 409) {
+          alert("중복된 예약이 존재합니다.");
+          navigate("/user/mypage");
         } else {
-          console.error("예약 실패");
+          alert("예약에 실패하셨습니다.");
+          navigate("/");
         }
       })
       .catch((error) => {
@@ -85,7 +80,6 @@ function RestaurantDetailPage() {
           />
         ))}
       <p>전화번호: {restaurant.callNumber}</p>
-      <p>예약 횟수: {restaurant.reservationCount}</p>
       <button onClick={reserveRestaurant}>예약하기</button>
     </div>
   );

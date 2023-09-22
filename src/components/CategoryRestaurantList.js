@@ -27,7 +27,7 @@ function CategoryRestaurantList() {
 
   return (
     <div>
-      <h3>등록된 식당 목록</h3>
+      <h3>{category} 리스트</h3>
       <table>
         <thead>
           <tr>
@@ -38,14 +38,15 @@ function CategoryRestaurantList() {
             <th>오픈 시간</th>
             <th>마감 시간</th>
             <th>전화번호</th>
-            <th>예약횟수</th>
           </tr>
         </thead>
         <tbody>
           {restaurants.map((restaurant) => (
             <tr key={restaurant.id}>
               <td>
-                <Link to={`/store/${restaurant.id}`}>{restaurant.name}</Link>
+                <Link to={`/restaurant/${restaurant.id}`}>
+                  {restaurant.name}
+                </Link>
               </td>
               <td>{restaurant.location}</td>
               <td>{restaurant.category}</td>
@@ -53,7 +54,6 @@ function CategoryRestaurantList() {
               <td>{formatTime(restaurant.openingTime)}</td>
               <td>{formatTime(restaurant.closingTime)}</td>
               <td>{restaurant.callNumber}</td>
-              <td>{restaurant.reservationCount}</td>
             </tr>
           ))}
         </tbody>

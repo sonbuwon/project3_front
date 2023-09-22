@@ -17,6 +17,7 @@ import Navbar from "./components/Navbar";
 import MyPage from "./components/MyPage";
 import CategoryRestaurantList from "./components/CategoryRestaurantList";
 import jwt_decode from "jwt-decode";
+import AdminRestaurantList from "./components/AdminRestaurantList";
 
 // 권한에 따른 라우터 처리 하는 메소드
 function ProtectedRoute({ element, userRole, requiredRole, redirectTo }) {
@@ -32,7 +33,7 @@ function App() {
     const decoded = jwt_decode(token);
     userRole = decoded.role;
   }
-  console.log(userRole);
+  console.log("userRole:" + userRole);
 
   return (
     <div className="App">
@@ -40,14 +41,34 @@ function App() {
       <Router>
         <Navbar userRole={userRole} />
         <Routes>
-          <Route path="/user/signup" element={<RegisterPage />} />
-          <Route path="/user/login" element={<LoginPage />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/store/list" element={<RestaurantList />} />
-          <Route path="/store/:id" element={<RestaurantDetailPage />} />
-          <Route path="/store/top" element={<TopRatedRestaurantList />} />
           <Route
-            path="/store/byCategory/:category"
+            path="/user/signup"
+            element={
+              <ProtectedRoute
+                element={<RegisterPage />}
+                userRole={userRole}
+                requiredRole={null}
+                redirectTo="/"
+              />
+            }
+          />
+          <Route
+            path="/user/login"
+            element={
+              <ProtectedRoute
+                element={<LoginPage />}
+                userRole={userRole}
+                requiredRole={null}
+                redirectTo="/"
+              />
+            }
+          />
+          <Route path="/user/mypage" element={<MyPage />} />
+          <Route path="/restaurant/list" element={<RestaurantList />} />
+          <Route path="/restaurant/:id" element={<RestaurantDetailPage />} />
+          <Route path="/restaurant/top" element={<TopRatedRestaurantList />} />
+          <Route
+            path="/restaurant/byCategory/:category"
             element={<CategoryRestaurantList />}
           />
           <Route
@@ -55,6 +76,17 @@ function App() {
             element={
               <ProtectedRoute
                 element={<RestaurantForm />}
+                userRole={userRole}
+                requiredRole="ROLE_ADMIN"
+                redirectTo="/"
+              />
+            }
+          />
+          <Route
+            path="/admin/restaurantList"
+            element={
+              <ProtectedRoute
+                element={<AdminRestaurantList />}
                 userRole={userRole}
                 requiredRole="ROLE_ADMIN"
                 redirectTo="/"

@@ -20,34 +20,9 @@ function RestaurantList() {
       });
   }, []);
 
-  // 삭제 버튼 클릭시 해당 식당 삭제
-  const deleteRestaurant = (id) => {
-    const token = localStorage.getItem("refreshToken");
-
-    fetch(`${localurl}/admin/store/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: token,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          // 성공적으로 삭제된 경우, 리스트에서 해당 항목을 제거
-          setRestaurants(
-            restaurants.filter((restaurant) => restaurant.id !== id)
-          );
-        } else {
-          console.error("Error deleting restaurant");
-        }
-      })
-      .catch((error) => {
-        console.error("Error deleting restaurant: ", error);
-      });
-  };
-
   return (
     <div>
-      <h3>등록된 식당 목록</h3>
+      <h3>전체 리스트</h3>
       <table>
         <thead>
           <tr>
@@ -58,14 +33,15 @@ function RestaurantList() {
             <th>오픈 시간</th>
             <th>마감 시간</th>
             <th>전화번호</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
           {restaurants.map((restaurant) => (
             <tr key={restaurant.id}>
               <td>
-                <Link to={`/store/${restaurant.id}`}>{restaurant.name}</Link>
+                <Link to={`/restaurant/${restaurant.id}`}>
+                  {restaurant.name}
+                </Link>
               </td>
               <td>{restaurant.location}</td>
               <td>{restaurant.category}</td>
@@ -73,11 +49,6 @@ function RestaurantList() {
               <td>{formatTime(restaurant.openingTime)}</td>
               <td>{formatTime(restaurant.closingTime)}</td>
               <td>{restaurant.callNumber}</td>
-              <td>
-                <button onClick={() => deleteRestaurant(restaurant.id)}>
-                  DELETE
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>
