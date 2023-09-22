@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+// import jwt_decode from "jwt-decode";
 
-function Navbar() {
+function Navbar({ userRole }) {
   return (
     <nav>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">홈</Link>
         </li>
         <li>
           <Link to="/store/byCategory/한식">한식</Link> |{" "}
@@ -24,22 +25,27 @@ function Navbar() {
           <Link to="/store/byCategory/파인다이닝">파인다이닝</Link>
         </li>
         <li>
-          <Link to="/store/list">Restaurant List</Link>
+          <Link to="/store/list">식당 목록</Link>
         </li>
         <li>
-          <Link to="/store/top">Top Restaurants</Link>
+          <Link to="/store/top">실시간 TOP</Link>
         </li>
         <li>
-          <Link to="/register">Sign up</Link>
+          <Link to="/user/signup">회원가입</Link>
         </li>
         <li>
-          <Link to="/login">Login</Link>
+          <Link to="/user/login">로그인</Link>
         </li>
         <li>
-          <Link to="/mypage">My Page</Link>
+          <Link to="/mypage">마이페이지</Link>
         </li>
+        {userRole === "ROLE_ADMIN" && (
+          <li>
+            <Link to="/admin/registerRestaurant">업체 등록</Link>
+          </li>
+        )}
         <li>
-          <Link to="/restaurantform">Restaurant register</Link>
+          <button>로그아웃</button>
         </li>
       </ul>
     </nav>
