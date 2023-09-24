@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { localurl } from "../utils/localUrl";
 import { useNavigate } from "react-router-dom";
+import Post from "../utils/Post";
 
 function RestaurantForm() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
-    location: "",
+    address: "",
     category: "",
     description: "",
     openingTime: "09:00",
@@ -17,6 +18,31 @@ function RestaurantForm() {
 
   const [fileInputs, setFileInputs] = useState([0]); // 초기 상태에 하나의 파일 입력 필드
   const [files, setFiles] = useState({});
+  // 여기부터 주소창
+  const [enroll_company, setEnroll_company] = useState({
+    address: "",
+  });
+  const [popup, setPopup] = useState(false);
+
+  const handleInput = (e) => {
+    setEnroll_company({
+      [e.target.name]: e.target.value,
+    });
+
+    setFormData((prev) => ({
+      ...prev,
+      address: e.target.value,
+    }));
+  };
+
+  const handleComplete = (data) => {
+    setPopup(!popup);
+    setFormData((prev) => ({
+      ...prev,
+      address: enroll_company.address,
+    }));
+  };
+  // 여기까지 주소창
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,7 +101,8 @@ function RestaurantForm() {
       .then((response) => {
         if (response.ok) {
           alert("식당이 등록되었습니다.");
-          navigate("/store/list");
+          navigate("/admin/restaurantList");
+          console.log(formData.address);
         } else {
           alert("식당 등록에 실패했습니다. 다시 시도해주세요.");
         }
@@ -97,13 +124,36 @@ function RestaurantForm() {
           required
         />
         <br />
-        <input
+        {/* <input
           name="location"
           placeholder="Location"
           value={formData.location}
           onChange={handleChange}
           required
         />
+        <br /> */}
+        <input
+          className="user_enroll_text"
+          placeholder="Address"
+          type="text"
+          required={true}
+          name="location"
+          onChange={handleInput}
+          value={enroll_company.address}
+        />
+        <button onClick={handleComplete}>우편번호 찾기</button>
+        {popup && (
+          <Post
+            company={enroll_company}
+            setcompany={(company) => {
+              setEnroll_company(company);
+              setFormData((prev) => ({
+                ...prev,
+                address: company.address,
+              }));
+            }}
+          ></Post>
+        )}
         <br />
         <select
           name="category"
@@ -163,7 +213,7 @@ function RestaurantForm() {
           </div>
         ))}
         <button type="button" onClick={addFileInput}>
-          Add another image
+          +
         </button>
         <br />
         <input
