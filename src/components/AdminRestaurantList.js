@@ -59,7 +59,6 @@ function AdminRestaurantList() {
             <th>마감 시간</th>
             <th>전화번호</th>
             <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -76,9 +75,6 @@ function AdminRestaurantList() {
               <td>{formatTime(restaurant.openingTime)}</td>
               <td>{formatTime(restaurant.closingTime)}</td>
               <td>{restaurant.callNumber}</td>
-              <td>
-                <button>수정</button>
-              </td>
               <td>
                 <button onClick={() => deleteRestaurant(restaurant.id)}>
                   삭제

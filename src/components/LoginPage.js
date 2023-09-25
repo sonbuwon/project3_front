@@ -55,7 +55,7 @@ function LoginPage() {
         />
       </div>
       <div>
-        <button onClick={doLogin}>Login(Generate Token)</button>
+        <button onClick={doLogin}>로그인</button>
       </div>
     </div>
   );

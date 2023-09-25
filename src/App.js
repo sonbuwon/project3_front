@@ -33,7 +33,6 @@ function App() {
     const decoded = jwt_decode(token);
     userRole = decoded.role;
   }
-  console.log("userRole:" + userRole);
 
   return (
     <div className="App">
