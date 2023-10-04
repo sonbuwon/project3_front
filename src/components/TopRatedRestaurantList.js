@@ -8,7 +8,7 @@ function TopRatedRestaurantList() {
 
   // 마운트시 예약 횟수가 많은 순서대로 식당 목록 출력
   useEffect(() => {
-    fetch(`${localurl}/store/top`, {
+    fetch(`${localurl}/store/topWithImageOne`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -27,6 +27,7 @@ function TopRatedRestaurantList() {
       <table>
         <thead>
           <tr>
+            <th>대표 이미지</th>
             <th>식당명</th>
             <th>위치</th>
             <th>카테고리</th>
@@ -41,6 +42,15 @@ function TopRatedRestaurantList() {
         <tbody>
           {restaurants.map((restaurant) => (
             <tr key={restaurant.id}>
+              <td>
+                <td>
+                  <img
+                    src={`${localurl}/store/${restaurant.id}/image/${restaurant.imageOneId}`}
+                    alt={`${restaurant.name}-${restaurant.imageOneId}`}
+                    width={"200"}
+                  />
+                </td>
+              </td>
               <td>
                 <Link to={`/restaurant/${restaurant.id}`}>
                   {restaurant.name}

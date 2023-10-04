@@ -9,7 +9,7 @@ function CategoryRestaurantList() {
 
   useEffect(() => {
     // 카테고리별 식당을 불러오는 API 호출
-    fetch(`${localurl}/store/byCategory/${category}`, {
+    fetch(`${localurl}/store/byCategoryWithImageOne/${category}`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -31,6 +31,7 @@ function CategoryRestaurantList() {
       <table>
         <thead>
           <tr>
+            <th>대표 이미지</th>
             <th>식당명</th>
             <th>위치</th>
             <th>카테고리</th>
@@ -43,6 +44,13 @@ function CategoryRestaurantList() {
         <tbody>
           {restaurants.map((restaurant) => (
             <tr key={restaurant.id}>
+              <td>
+                <img
+                  src={`${localurl}/store/${restaurant.id}/image/${restaurant.imageOneId}`}
+                  alt={`${restaurant.name}-${restaurant.imageOneId}`}
+                  width={"200"}
+                />
+              </td>
               <td>
                 <Link to={`/restaurant/${restaurant.id}`}>
                   {restaurant.name}

@@ -1,7 +1,9 @@
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import "../styles/Navbar.css";
 
 function Navbar({ userRole }) {
+  const [keyword, setKeyword] = useState("");
+
   const navigate = useNavigate();
 
   const doTempLogout = () => {
@@ -16,9 +18,19 @@ function Navbar({ userRole }) {
     }
   };
 
+  const handleSearch = () => {
+    navigate("/restaurant/search", {
+      state: { keyword: keyword },
+    });
+  };
+
   return (
     <div className="header">
       <div className="header-area">
+        <div>
+          <input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+          <button onClick={handleSearch}>검색</button>
+        </div>
         <div className="dropdown-Menu">
           <ul>
             <li>

@@ -67,7 +67,7 @@ function RestaurantDetailPage() {
       <KakaoMap location={restaurant.location} />
       <p>위치: {restaurant.location}</p>
       <p>카테고리: {restaurant.category}</p>
-      <p>설명: {restaurant.description}</p>
+      <p>소개: {restaurant.description}</p>
       <p>오픈 시간: {formatTime(restaurant.openingTime)}</p>
       <p>마감 시간: {formatTime(restaurant.closingTime)}</p>
       {restaurant.imageIds &&

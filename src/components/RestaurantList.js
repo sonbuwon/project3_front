@@ -6,14 +6,14 @@ import { formatTime } from "../utils/formatTime";
 function RestaurantList() {
   const [restaurants, setRestaurants] = useState([]);
 
-  // 마운트시 전체 등록된 식당 전체 출력
   useEffect(() => {
-    fetch(`${localurl}/store/list`, {
+    fetch(`${localurl}/store/listAllWithImageOne`, {
       method: "GET",
     })
       .then((response) => response.json())
       .then((data) => {
         setRestaurants(data);
+        // console.log(data);
       })
       .catch((error) => {
         console.error("Error uploading data: ", error);
@@ -26,6 +26,7 @@ function RestaurantList() {
       <table>
         <thead>
           <tr>
+            <th>대표 이미지</th>
             <th>식당명</th>
             <th>위치</th>
             <th>카테고리</th>
@@ -38,6 +39,13 @@ function RestaurantList() {
         <tbody>
           {restaurants.map((restaurant) => (
             <tr key={restaurant.id}>
+              <td>
+                <img
+                  src={`${localurl}/store/${restaurant.id}/image/${restaurant.imageOneId}`}
+                  alt={`${restaurant.name}-${restaurant.imageOneId}`}
+                  width={"200"}
+                />
+              </td>
               <td>
                 <Link to={`/restaurant/${restaurant.id}`}>
                   {restaurant.name}
