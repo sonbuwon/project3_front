@@ -27,7 +27,7 @@ function CategoryRestaurantList() {
 
   return (
     <div>
-      <h3>{category} 리스트</h3>
+      <h3>{category} 목록</h3>
       <table>
         <thead>
           <tr>

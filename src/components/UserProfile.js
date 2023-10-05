@@ -26,8 +26,6 @@ function UserProfile() {
         return response.text();
       })
       .then((data) => {
-        // 닉네임 잘 출력되는 확인
-        // console.log(data);
         setUserNickname(data);
       });
   }, []);

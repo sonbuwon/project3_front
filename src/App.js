@@ -19,6 +19,7 @@ import CategoryRestaurantList from "./components/CategoryRestaurantList";
 import jwt_decode from "jwt-decode";
 import AdminRestaurantList from "./components/AdminRestaurantList";
 import SearchList from "./components/SearchList";
+import EditUserPage from "./components/EditUserPage";
 
 // 권한에 따른 라우터 처리 하는 메소드
 function ProtectedRoute({ element, userRole, requiredRole, redirectTo }) {
@@ -63,7 +64,28 @@ function App() {
               />
             }
           />
-          <Route path="/user/mypage" element={<MyPage />} />
+          <Route
+            path="/user/mypage"
+            element={
+              <ProtectedRoute
+                element={<MyPage />}
+                userRole={userRole}
+                requiredRole="ROLE_USER"
+                redirectTo="/"
+              />
+            }
+          />
+          <Route
+            path="/user/edituser"
+            element={
+              <ProtectedRoute
+                element={<EditUserPage />}
+                userRole={userRole}
+                requiredRole="ROLE_USER"
+                redirectTo="/"
+              />
+            }
+          />
           <Route path="/restaurant/list" element={<RestaurantList />} />
           <Route path="/restaurant/:id" element={<RestaurantDetailPage />} />
           <Route path="/restaurant/top" element={<TopRatedRestaurantList />} />

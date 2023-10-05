@@ -22,7 +22,7 @@ function RestaurantList() {
 
   return (
     <div>
-      <h3>전체 리스트</h3>
+      <h3>전체 목록</h3>
       <table>
         <thead>
           <tr>

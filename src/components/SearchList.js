@@ -6,6 +6,7 @@ import { formatTime } from "../utils/formatTime";
 function SearchBar() {
   const [restaurants, setRestaurants] = useState([]);
 
+  // navigate의 state 속성 값 받아오기
   const location = useLocation();
   const keyword = location.state.keyword;
 
@@ -18,12 +19,12 @@ function SearchBar() {
         setRestaurants(data);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [keyword]);
 
   return (
     <div>
       <div>
-        <h3>전체 리스트</h3>
+        <h3>검색 목록</h3>
         <table>
           <thead>
             <tr>

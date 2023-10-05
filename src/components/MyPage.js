@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { localurl } from "../utils/localUrl";
+import { formatDay } from "../utils/formatDay";
 
 function MyPage() {
+  const navigate = useNavigate();
+
   const [userInfo, setUserInfo] = useState({
     mid: "",
     nickname: "",
     reservationList: [],
+    email: "",
+    birth: "",
+    phoneNumber: "",
   });
+  const [userEditInfo, setUserEditInfo] = useState({});
 
   useEffect(() => {
     const token = localStorage.getItem("refreshToken");
@@ -29,6 +37,35 @@ function MyPage() {
         console.error("Error uploading data: ", error);
       });
   }, []);
+
+  const handleEdit = (editInfo) => {
+    navigate("/user/edituser", {
+      state: { userEditInfo: editInfo },
+    });
+  };
+
+  const editUserInfo = () => {
+    const token = localStorage.getItem("refreshToken");
+
+    if (!token) {
+      return;
+    }
+
+    fetch(`${localurl}/user/editInfo`, {
+      method: "GET",
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUserEditInfo(data);
+        handleEdit(data);
+      })
+      .catch((error) => {
+        console.error("Error uploading data: ", error);
+      });
+  };
 
   const deleteReservation = (reservationId) => {
     const token = localStorage.getItem("refreshToken");
@@ -56,26 +93,50 @@ function MyPage() {
 
   return (
     <div>
-      <h3>{userInfo.nickname}님 안녕하세요</h3>
-      <h4>예약 리스트</h4>
-      <ul>
-        {userInfo.reservationList.length > 0 ? (
-          <ul>
-            {userInfo.reservationList.map((reservation, index) => (
-              <li key={index}>
-                {reservation.restaurant_name}
-                <button
-                  onClick={() => deleteReservation(reservation.reservation_id)}
-                >
-                  예약 삭제
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>예약 내역이 없습니다</p>
-        )}
-      </ul>
+      {/* 예약 정보 */}
+      <div>
+        <h3>{userInfo.nickname}님 안녕하세요</h3>
+        <h4>예약 리스트</h4>
+        <ul>
+          {userInfo.reservationList.length > 0 ? (
+            <ul>
+              {userInfo.reservationList.map((reservation, index) => (
+                <li key={index}>
+                  {reservation.restaurant_name}
+                  <button
+                    onClick={() =>
+                      deleteReservation(reservation.reservation_id)
+                    }
+                  >
+                    예약 삭제
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>예약 내역이 없습니다</p>
+          )}
+        </ul>
+      </div>
+      {/* 회원 정보 */}
+      <div>
+        <h3>회원 정보</h3>
+        <p>
+          <span>이메일: </span>
+          {userInfo.email}
+        </p>
+        <p>
+          <span>연락처: </span>
+          {userInfo.phoneNumber}
+        </p>
+        <p>
+          <span>생년월일: </span>
+          {formatDay(userInfo.birth)}
+        </p>
+        <p>
+          <button onClick={editUserInfo}>회원 정보 수정</button>
+        </p>
+      </div>
     </div>
   );
 }

@@ -114,7 +114,7 @@ function RestaurantForm() {
 
   return (
     <div>
-      <p>업체 등록</p>
+      <h3>업체 등록</h3>
       <form onSubmit={handleSubmit}>
         <input
           name="name"

@@ -47,7 +47,7 @@ function AdminRestaurantList() {
 
   return (
     <div>
-      <h3>전체 식당 리스트 (관리자용)</h3>
+      <h3>전체 목록 (관리자용)</h3>
       <table>
         <thead>
           <tr>

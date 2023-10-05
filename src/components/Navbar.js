@@ -17,7 +17,7 @@ function Navbar({ userRole }) {
       console.error(error);
     }
   };
-
+  // react-router v6에서 데이터 전달 하는 방법
   const handleSearch = () => {
     navigate("/restaurant/search", {
       state: { keyword: keyword },
@@ -68,7 +68,7 @@ function Navbar({ userRole }) {
                 <Link to="/user/login">로그인</Link>
               </li>
             )}
-            {userRole !== null && (
+            {userRole === "ROLE_USER" && (
               <li>
                 <Link to="/user/mypage">마이페이지</Link>
               </li>
