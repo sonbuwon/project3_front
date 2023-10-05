@@ -83,6 +83,11 @@ function Navbar({ userRole }) {
                 <Link to="/admin/restaurantList">식당 목록(관리자용)</Link>
               </li>
             )}
+            {userRole === "ROLE_ADMIN" && (
+              <li>
+                <Link to="/admin/userList">유저 목록(관리자용)</Link>
+              </li>
+            )}
             {userRole !== null && (
               <li>
                 <button onClick={doTempLogout}>로그아웃</button>

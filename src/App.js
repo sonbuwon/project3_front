@@ -20,6 +20,7 @@ import jwt_decode from "jwt-decode";
 import AdminRestaurantList from "./components/AdminRestaurantList";
 import SearchList from "./components/SearchList";
 import EditUserPage from "./components/EditUserPage";
+import RoleUserList from "./components/RoleUserList";
 
 // 권한에 따른 라우터 처리 하는 메소드
 function ProtectedRoute({ element, userRole, requiredRole, redirectTo }) {
@@ -111,6 +112,17 @@ function App() {
             element={
               <ProtectedRoute
                 element={<AdminRestaurantList />}
+                userRole={userRole}
+                requiredRole="ROLE_ADMIN"
+                redirectTo="/"
+              />
+            }
+          />
+          <Route
+            path="/admin/userList"
+            element={
+              <ProtectedRoute
+                element={<RoleUserList />}
                 userRole={userRole}
                 requiredRole="ROLE_ADMIN"
                 redirectTo="/"

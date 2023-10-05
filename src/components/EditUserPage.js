@@ -8,26 +8,17 @@ function EditUserPage() {
   const location = useLocation();
   const userEditInfo = location.state.userEditInfo;
 
-  const [newNickname, setNewNickname] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-  const [newPhonenumber, setNewPhonenumber] = useState("");
+  const [newNickname, setNewNickname] = useState(userEditInfo.nickname);
+  const [newEmail, setNewEmail] = useState(userEditInfo.email);
+  const [newPhonenumber, setNewPhonenumber] = useState(
+    userEditInfo.phoneNumber
+  );
 
   const editConfirm = () => {
     const token = localStorage.getItem("refreshToken");
 
     if (!token) {
       return;
-    }
-
-    // 빈 정보 방지
-    if (newNickname.length < 1) {
-      setNewNickname(userEditInfo.nickname);
-    }
-    if (newEmail.length < 1) {
-      setNewEmail(userEditInfo.email);
-    }
-    if (newPhonenumber.length < 1) {
-      setNewPhonenumber(userEditInfo.phoneNumber);
     }
 
     fetch(`${localurl}/user/editInfo`, {
