@@ -95,8 +95,8 @@ function MyPage() {
     <div>
       {/* 예약 정보 */}
       <div>
-        <h3>{userInfo.nickname}님 안녕하세요</h3>
-        <h4>예약 리스트</h4>
+        <h3>{userInfo.nickname}님의 마이페이지</h3>
+        <h3>예약 리스트</h3>
         <ul>
           {userInfo.reservationList.length > 0 ? (
             <ul>

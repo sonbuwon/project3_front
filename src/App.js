@@ -21,6 +21,7 @@ import AdminRestaurantList from "./components/AdminRestaurantList";
 import SearchList from "./components/SearchList";
 import EditUserPage from "./components/EditUserPage";
 import RoleUserList from "./components/RoleUserList";
+import Home from "./components/Home";
 
 // 권한에 따른 라우터 처리 하는 메소드
 function ProtectedRoute({ element, userRole, requiredRole, redirectTo }) {
@@ -43,6 +44,8 @@ function App() {
       <Router>
         <Navbar userRole={userRole} />
         <Routes>
+          {/* 홈 */}
+          <Route path="/" element={<Home />} />
           <Route
             path="/user/signup"
             element={

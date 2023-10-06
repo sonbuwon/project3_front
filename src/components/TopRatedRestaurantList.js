@@ -23,7 +23,7 @@ function TopRatedRestaurantList() {
 
   return (
     <div>
-      <h3>실시간 인기 목록</h3>
+      <h3>인기 TOP목록</h3>
       <table>
         <thead>
           <tr>
